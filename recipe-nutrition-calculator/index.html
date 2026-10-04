@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recipe Nutrition Calculator - Paste Any Link, Get Instant Macros</title>
+<meta name="description" content="How recipe nutrition calculators work, why ingredient-by-ingredient entry is still slow even with one, and how MacroChef calculates macros from just a recipe link.">
+<link rel="canonical" href="https://stv-99.github.io/macrochef-site/recipe-nutrition-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Recipe Nutrition Calculator - Paste Any Link, Get Instant Macros">
+<meta property="og:description" content="How recipe nutrition calculators work, and how MacroChef calculates macros from just a recipe link — no manual ingredient entry.">
+<meta property="og:url" content="https://stv-99.github.io/macrochef-site/recipe-nutrition-calculator/">
+<meta property="og:image" content="https://stv-99.github.io/macrochef-site/nutrition.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --navy:#0f1720; --navy2:#161f2c; --cream:#faf7f2; --ink:#0f1720;
+    --muted:#5b6672; --amber:#e8934a; --amber2:#f2a75f; --line:#e7e1d8;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 24px}
+  a{color:inherit}
+
+  nav{padding:20px 0; border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; max-width:1040px}
+  .brand{font-weight:800; text-decoration:none; font-size:15px; letter-spacing:-0.01em}
+  .nav-cta{
+    background:var(--amber); color:#1a1006; font-weight:700; font-size:14px;
+    padding:9px 18px; border-radius:10px; text-decoration:none;
+  }
+
+  article{padding:52px 0 20px}
+  .kicker{
+    font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--amber); margin:0 0 14px;
+  }
+  h1{
+    font-size:clamp(28px,5vw,40px); line-height:1.12; margin:0 0 20px; font-weight:800;
+    letter-spacing:-0.02em;
+  }
+  .lede{font-size:18px; line-height:1.6; color:var(--muted); margin:0 0 36px}
+  h2{font-size:clamp(20px,3vw,24px); margin:40px 0 14px; letter-spacing:-0.01em}
+  p{font-size:16px; line-height:1.7; color:#2b3440; margin:0 0 16px}
+  ol,ul{font-size:16px; line-height:1.75; color:#2b3440; padding-left:22px}
+  li{margin-bottom:8px}
+  .note{
+    background:#fff; border:1px solid var(--line); border-left:3px solid var(--amber);
+    border-radius:10px; padding:16px 20px; font-size:14.5px; color:var(--muted); margin:28px 0;
+  }
+  .shot{
+    display:block; margin:32px auto; max-width:280px; width:100%; border-radius:18px;
+    box-shadow:0 20px 45px rgba(15,23,32,.18); border:1px solid var(--line);
+  }
+
+  .cta-box{
+    background:var(--navy); color:#fff; border-radius:20px; padding:36px 32px;
+    text-align:center; margin:48px 0 20px;
+  }
+  .cta-box h3{margin:0 0 10px; font-size:22px}
+  .cta-box p{color:#c7cfd7; margin:0 0 22px; font-size:15px}
+  .cta{
+    display:inline-flex; align-items:center; gap:10px; background:var(--amber);
+    color:#1a1006; font-weight:700; font-size:16px; padding:14px 26px; border-radius:14px;
+    text-decoration:none;
+  }
+  .cta-sub{margin-top:12px; font-size:12.5px; color:#8b95a1}
+
+  footer{
+    border-top:1px solid var(--line); padding:32px 0; text-align:center;
+    font-size:13px; color:var(--muted); margin-top:40px;
+  }
+  footer a{text-decoration:underline; text-underline-offset:2px}
+  footer .links{margin-top:8px}
+  footer .links a{margin:0 8px}
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="..">← MacroChef</a>
+      <a class="nav-cta" href="https://apps.apple.com/us/app/macrochef-macro-tracker/id6785106507">Download</a>
+    </div>
+  </nav>
+
+  <article class="wrap">
+    <p class="kicker">Nutrition estimates</p>
+    <h1>A recipe nutrition calculator that doesn't need a spreadsheet</h1>
+    <p class="lede">Most "recipe nutrition calculators" still need you to type in every ingredient yourself. Here's what's actually involved in that calculation, and a faster way to get the same answer.</p>
+
+    <h2>What a recipe nutrition calculator actually does</h2>
+    <p>Whatever form it takes — a web tool, a spreadsheet, an app — a recipe nutrition calculator is doing the same four things:</p>
+    <ol>
+      <li>Taking a list of ingredients and their quantities.</li>
+      <li>Looking up nutrition data for each one, ideally from a real database rather than a guess.</li>
+      <li>Summing every ingredient into a total for the whole recipe.</li>
+      <li>Dividing by how many servings the recipe makes.</li>
+    </ol>
+
+    <h2>The part most calculators don't solve</h2>
+    <p>Most tools that call themselves a "recipe nutrition calculator" only automate step 2 and 3 — you still have to manually type every ingredient and quantity in yourself first. For a 10-ingredient recipe, that's still 10 manual entries before you see a single number.</p>
+    <div class="note">Any recipe-based nutrition number — however it's calculated — is an estimate. Ingredient substitutions, brand differences, and exact serving size all shift the real value. There's no version of this that's lab-precise.</div>
+
+    <img class="shot" src="../nutrition.webp" alt="MacroChef daily nutrition screen showing calorie and macro totals">
+
+    <h2>What MacroChef does differently</h2>
+    <p>MacroChef skips the manual entry step entirely. Paste a link to a recipe — from a website, TikTok, or Instagram — and it reads the recipe itself: ingredients, quantities, and steps, then calculates a per-serving nutrition estimate automatically, cross-referencing USDA FoodData Central and Open Food Facts where it can and using AI estimation to fill gaps where a direct match isn't available.</p>
+    <p>You get the same four-step calculation above, done for you, starting from the recipe link instead of a blank ingredient list.</p>
+
+    <div class="cta-box">
+      <h3>Paste your next recipe link into MacroChef</h3>
+      <p>Free to download. Import from a website, TikTok, or Instagram.</p>
+      <a class="cta" href="https://apps.apple.com/us/app/macrochef-macro-tracker/id6785106507">Download MacroChef</a>
+      <div class="cta-sub">No credit card required</div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="wrap">
+      <div>MacroChef · Built by Santiago Toro</div>
+      <div class="links">
+        <a href="..">Home</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Use</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
