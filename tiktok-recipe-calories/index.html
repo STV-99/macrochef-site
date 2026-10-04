@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Many Calories Are in That TikTok Recipe? Find Out in Seconds</title>
+<meta name="description" content="Most recipe videos don't show nutrition info. Here's how calorie and macro estimates for a recipe actually work, and how MacroChef automates it for recipes from TikTok.">
+<link rel="canonical" href="https://stv-99.github.io/macrochef-site/tiktok-recipe-calories/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How Many Calories Are in That TikTok Recipe? Find Out in Seconds">
+<meta property="og:description" content="Most recipe videos don't show nutrition info. Here's how calorie and macro estimates for a recipe actually work, and how MacroChef automates it.">
+<meta property="og:url" content="https://stv-99.github.io/macrochef-site/tiktok-recipe-calories/">
+<meta property="og:image" content="https://stv-99.github.io/macrochef-site/recipe-detail.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --navy:#0f1720; --navy2:#161f2c; --cream:#faf7f2; --ink:#0f1720;
+    --muted:#5b6672; --amber:#e8934a; --amber2:#f2a75f; --line:#e7e1d8;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 24px}
+  a{color:inherit}
+
+  nav{padding:20px 0; border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; max-width:1040px}
+  .brand{font-weight:800; text-decoration:none; font-size:15px; letter-spacing:-0.01em}
+  .nav-cta{
+    background:var(--amber); color:#1a1006; font-weight:700; font-size:14px;
+    padding:9px 18px; border-radius:10px; text-decoration:none;
+  }
+
+  article{padding:52px 0 20px}
+  .kicker{
+    font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--amber); margin:0 0 14px;
+  }
+  h1{
+    font-size:clamp(28px,5vw,40px); line-height:1.12; margin:0 0 20px; font-weight:800;
+    letter-spacing:-0.02em;
+  }
+  .lede{font-size:18px; line-height:1.6; color:var(--muted); margin:0 0 36px}
+  h2{font-size:clamp(20px,3vw,24px); margin:40px 0 14px; letter-spacing:-0.01em}
+  p{font-size:16px; line-height:1.7; color:#2b3440; margin:0 0 16px}
+  ol,ul{font-size:16px; line-height:1.75; color:#2b3440; padding-left:22px}
+  li{margin-bottom:8px}
+  .note{
+    background:#fff; border:1px solid var(--line); border-left:3px solid var(--amber);
+    border-radius:10px; padding:16px 20px; font-size:14.5px; color:var(--muted); margin:28px 0;
+  }
+  .shot{
+    display:block; margin:32px auto; max-width:280px; width:100%; border-radius:18px;
+    box-shadow:0 20px 45px rgba(15,23,32,.18); border:1px solid var(--line);
+  }
+
+  .cta-box{
+    background:var(--navy); color:#fff; border-radius:20px; padding:36px 32px;
+    text-align:center; margin:48px 0 20px;
+  }
+  .cta-box h3{margin:0 0 10px; font-size:22px}
+  .cta-box p{color:#c7cfd7; margin:0 0 22px; font-size:15px}
+  .cta{
+    display:inline-flex; align-items:center; gap:10px; background:var(--amber);
+    color:#1a1006; font-weight:700; font-size:16px; padding:14px 26px; border-radius:14px;
+    text-decoration:none;
+  }
+  .cta-sub{margin-top:12px; font-size:12.5px; color:#8b95a1}
+
+  footer{
+    border-top:1px solid var(--line); padding:32px 0; text-align:center;
+    font-size:13px; color:var(--muted); margin-top:40px;
+  }
+  footer a{text-decoration:underline; text-underline-offset:2px}
+  footer .links{margin-top:8px}
+  footer .links a{margin:0 8px}
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="..">← MacroChef</a>
+      <a class="nav-cta" href="https://apps.apple.com/us/app/macrochef-macro-tracker/id6785106507">Download</a>
+    </div>
+  </nav>
+
+  <article class="wrap">
+    <p class="kicker">Nutrition estimates</p>
+    <h1>How many calories are in that TikTok recipe?</h1>
+    <p class="lede">The video shows you what to cook — not what it costs you nutritionally. Here's how that number actually gets calculated, and where the estimate comes from.</p>
+
+    <h2>The problem</h2>
+    <p>A recipe video is a cooking demo, not a nutrition label. Unless the creator manually types out macros in the caption (most don't), there's no built-in way to know the calories, protein, carbs, or fat in what you just watched — until you cook it, and by then it's too late to decide whether it fits your day.</p>
+
+    <h2>How a recipe's nutrition is actually estimated</h2>
+    <p>There's no shortcut around the underlying math — every recipe nutrition estimate, including MacroChef's, comes from the same basic process:</p>
+    <ol>
+      <li><strong>List every ingredient at the quantity actually used</strong> — not the package size, the amount in the recipe (e.g. "2 tbsp olive oil," not "1 bottle").</li>
+      <li><strong>Look up nutrition for that exact quantity</strong>, ideally from a database like USDA FoodData Central rather than a guess.</li>
+      <li><strong>Sum every ingredient</strong> to get the total for the whole recipe.</li>
+      <li><strong>Divide by the number of servings</strong> the recipe makes, to get a per-serving number.</li>
+    </ol>
+    <div class="note">This is always an estimate. Cooking method, brand substitutions, and how many servings you actually cut the dish into all shift the real number — there's no version of this calculation, automated or manual, that produces a lab-certified value.</div>
+
+    <h2>Why it's tedious to do by hand</h2>
+    <p>A typical recipe has somewhere between 8 and 15 ingredients. That's 8 to 15 separate database lookups, plus unit conversions between cups, grams, and tablespoons, before you even get to step 4 above. Most people reasonably don't do this for every recipe they see — which means most TikTok recipes just never get checked.</p>
+
+    <img class="shot" src="../recipe-detail.webp" alt="MacroChef recipe detail screen showing imported ingredients, steps, and per-serving nutrition">
+
+    <h2>What MacroChef does</h2>
+    <p>MacroChef automates the four steps above. Share a recipe directly from TikTok (or paste the link), and it extracts the ingredients, steps, and a per-serving nutrition estimate — cross-referencing USDA FoodData Central and Open Food Facts where it can, and filling gaps with AI estimation where a direct database match isn't available.</p>
+    <p>It does the calculation for you. It doesn't claim to replace a lab measurement — no recipe-based estimate can — but it removes the 8-to-15-lookup manual process above entirely.</p>
+
+    <div class="cta-box">
+      <h3>Try it on the next recipe you save</h3>
+      <p>Free to download. Import from a website, TikTok, or Instagram.</p>
+      <a class="cta" href="https://apps.apple.com/us/app/macrochef-macro-tracker/id6785106507">Download MacroChef</a>
+      <div class="cta-sub">No credit card required</div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="wrap">
+      <div>MacroChef · Built by Santiago Toro</div>
+      <div class="links">
+        <a href="..">Home</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Use</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
